@@ -13,9 +13,23 @@ const User = require('../../models/User');
 // @route           GET /api/auth
 // @description     Get all users
 // @access          Public
-router.get('/', async (req, res) => {
+router.get('/users', async (req, res) => {
 	try {
 		const user = await User.find().select('-password');
+
+		res.json(user);
+	} catch (error) {
+		console.error(err.message);
+		res.status(500).send('Server error');
+	}
+});
+
+// @route           GET /api/auth
+// @description     Get user infos
+// @access          Public
+router.get('/', auth, async (req, res) => {
+	try {
+		const user = await User.findById(req.user.id).select('-password');
 
 		res.json(user);
 	} catch (error) {
