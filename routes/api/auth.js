@@ -11,11 +11,11 @@ require('dotenv').config();
 const User = require('../../models/User');
 
 // @route           GET /api/auth
-// @description     Test route
+// @description     Get all users
 // @access          Public
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
 	try {
-		const user = await User.findById(req.user.id).select('-password');
+		const user = await User.find().select('-password');
 
 		res.json(user);
 	} catch (error) {

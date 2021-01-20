@@ -18,6 +18,7 @@ router.post(
 	],
 	async (req, res) => {
 		const { email, password, role } = req.body;
+		console.log(req.body);
 
 		try {
 			const errors = validationResult(req);
