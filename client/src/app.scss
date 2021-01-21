@@ -3,12 +3,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap');
 
 
-@import './components/layout/navbar.scss';
-@import './components/auth/auth.scss';
+
 
 // variables 
 $main-color: #68C2E8;
-// $second-color: #;
+$second-color: #337ab7;
 
 // breakpoints
 $bp-mobile-sm: 320px;
@@ -39,4 +38,5 @@ input {
 }
 
 
-
+@import './components/layout/navbar.scss';
+@import './components/auth/auth.scss';

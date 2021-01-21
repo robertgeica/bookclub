@@ -1,17 +1,15 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import { Link, Redirect, useHistory, Route } from 'react-router-dom';
+import React, { useState, Fragment } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import HamburgerMenu from 'react-hamburger-menu';
 // Redux
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
-import store from '../../store/store';
 
 import logo from '../../assets/logo.png';
 
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 	const [ open, setOpen ] = useState(false);
-	let history = useHistory();
 
 	if (window.initialWidth < 700) setOpen(true);
 	
@@ -19,7 +17,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 		<nav>
 			<div className="left-nav">
 				<Link className="logo" to="/">
-					<img src={logo} />
+					<img src={logo} alt="logo" />
 				</Link>
 			</div>
 
