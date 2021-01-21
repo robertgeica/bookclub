@@ -6,10 +6,9 @@ let Profile = require('../../models/Profile');
 
 // @route           GET /profile
 // @description     Test route
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
 	try {
-		const query = { userId: req.user.id };
-		const profile = await Profile.find(query);
+		const profile = await Profile.find();
 
 		res.send(profile);
 	} catch (error) {
@@ -20,14 +19,9 @@ router.get('/', auth, async (req, res) => {
 
 // @route           GET /profile/:id
 // @description     Test route
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
 	try {
-		let id = await req.params.id;
-		const profile = await Profile.findById(id);
-
-		if (profile.userId !== req.user.id) {
-			console.log('not allowed to delete this profile');
-		}
+		const profile = await Profile.find();
 
 		res.json(profile);
 	} catch (error) {
@@ -59,7 +53,7 @@ router.post('/:id', auth, async (req, res) => {
 		let profile = await Profile.findById(req.params.id);
 
 		if (profile.userId !== req.user.id) {
-			console.log('not allowed to delete this profile');
+			console.log('not allowed to update this profile');
 		}
 
 		if (!profile) res.status(404).send('No profile to update.');
