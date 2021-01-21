@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500&display=swap');
+
+
+@import './components/layout/navbar.scss';
+@import './components/auth/auth.scss';
+
+// variables 
+$main-color: #68C2E8;
+// $second-color: #;
+
+// breakpoints
+$bp-mobile-sm: 320px;
+$bp-mobile-md: 375px;
+$bp-mobile-lg: 425px;
+$bp-tablet: 768px;
+$bp-laptop: 1024px;
+$bp-laptop-lg: 1440px;
+
+
+// global styles
+* {
+  font-family: 'Exo 2', sans-serif;
+}
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+	background-color: #fff;
+}
+
+input {
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+
