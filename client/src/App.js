@@ -15,6 +15,7 @@ import Login from './components/auth/Login';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import Admin from './components/admin/Admin';
+import Library from './components/layout/Library';
 
 import './app.scss';
 
@@ -39,6 +40,7 @@ const App = () => {
           <Route exact path="/forgotPassword" component={ForgotPassword} />
           <Route exact path="/resetPassword" component={ResetPassword} />
           <Route exact path="/admin" component={Admin} />
+          <Route exact path="/library" component={Library} />
         </Switch>
       </Router>
     </Provider>
