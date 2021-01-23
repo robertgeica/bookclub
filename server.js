@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use('/api/register', require('./routes/api/register'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
-
+app.use('/api/category', require('./routes/api/category'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
