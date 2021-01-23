@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Category = require('../../models/Category');
+const User = require('../../models/User');
+const auth = require('../../middleware/auth');
 
 // @route           GET /category
 // @description     Test route
@@ -30,8 +32,12 @@ router.get('/:id', async (req, res) => {
 
 // @route           POST /category
 // @description     Add a category
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
   try {
+    const user = await User.findById(req.user.id).select('-password');
+
+    if(user.role !== 'admin') return res.status(401).send('Not allowed!');
+
     const category = await Category(req.body);
 
     category.save();
@@ -43,8 +49,13 @@ router.post('/', async (req, res) => {
 
 // @route           POST /category/:id
 // @description     Add a subcategory
-router.post('/:id', async (req, res) => {
+router.post('/:id', auth, async (req, res) => {
   try {
+
+    const user = await User.findById(req.user.id).select('-password');
+
+    if(user.role !== 'admin') return res.status(401).send('Not allowed!');
+
     let category = await Category.findById(req.params.id);
     console.log(req.params.id);
     if (!category) res.status(404).send('No Category to add a subcategory to.');
@@ -62,8 +73,13 @@ router.post('/:id', async (req, res) => {
 
 // @route           DELETE /category/:id
 // @description     Delete a category
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
   try {
+
+    const user = await User.findById(req.user.id).select('-password');
+
+    if(user.role !== 'admin') return res.status(401).send('Not allowed!');
+
     let id = await req.params.id;
 
     const category = await Category.findByIdAndDelete({ _id: id });
@@ -77,8 +93,13 @@ router.delete('/:id', async (req, res) => {
 
 // @route           PUT /category/:id
 // @description     Update a category
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
   try {
+
+    const user = await User.findById(req.user.id).select('-password');
+
+    if(user.role !== 'admin') return res.status(401).send('Not allowed!');
+    
     let id = await req.params.id;
     let category = await Category.findById(id);
 
