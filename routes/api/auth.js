@@ -104,7 +104,7 @@ router.put('/forgotpassword', async (req, res) => {
 			const token = jwt.sign({ _id: user._id }, process.env.JWT_RESET_PASSWORD, { expiresIn: '60m' });
 
 			const emailData = {
-				from: 'ripperhiphop@gmail.com',
+				from: '@gmail.com',
 				to: email,
 				subject: `Reset Password Link`,
 				html: `
