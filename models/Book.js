@@ -11,12 +11,14 @@ const BookSchema = new Schema({
     required: true,
   },
   rating: [],
-  category: {
-    categoryId: {
-      type: Object,
-      required: true,
+  category: [
+    {
+      categoryId: {
+        type: Object,
+        required: true,
+      },
     },
-  },
+  ],
   subcategories: [],
   description: {
     type: String,
