@@ -8,6 +8,10 @@
 // variables 
 $main-color: #68C2E8;
 $second-color: #337ab7;
+$placeholder-text-color: #cbd1dc;
+$button-text-color: #99a3ba;
+$button-background-color: #eef4ff;
+$border-color: #cdd9ed;
 
 // breakpoints
 $bp-mobile-sm: 320px;
@@ -41,3 +45,4 @@ input {
 @import './components/layout/navbar.scss';
 @import './components/auth/auth.scss';
 @import './components/layout/library.scss';
+@import './components/admin/admin.scss';

@@ -1,0 +1,134 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+
+  margin-top: 5em;
+
+  .category {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid $main-color;
+
+    @media (min-width: $bp-tablet) {
+      width: 60%;
+      margin: auto;
+    }
+
+    .category-form {
+      .form {
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+
+        .form-field {
+          background: #fff;
+          color: #000;
+          border: 0;
+          border: 1px solid #cdd9ed;
+          border-radius: 6px 6px 0 0;
+          outline: 0;
+          padding: 1.3em 1em;
+          &::placeholder {
+            color: $placeholder-text-color;
+          }
+        }
+
+        button {
+          text-align: center;
+          padding: 8px 12px;
+          font-size: 14px;
+          line-height: 25px;
+          color: $button-text-color;
+          background: $button-background-color;
+          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+          border: 1px solid #cdd9ed;
+          transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+          border-radius: 0 0 6px 6px;
+          cursor: pointer;
+
+          &:hover {
+            background: $main-color;
+            border: 1px solid $main-color;
+            color: #fff;
+          }
+
+          &:active {
+            background: $main-color;
+            box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+
+    .subcategory-form {
+      display: flex;
+      flex-direction: column;
+      margin: 2em 0;
+
+      .Dropdown-root {
+        height: 1px;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+
+        .Dropdown-control {
+          margin: auto;
+          cursor: pointer;
+        }
+      }
+      .inp {
+        display: flex;
+
+        & > button,
+        .form-field,
+        .dropdown {
+          white-space: nowrap;
+          display: block;
+          margin: 0.5em 0;
+          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+        }
+        .form-field {
+          display: block;
+          width: 100%;
+          padding: 8px 16px;
+          line-height: 25px;
+          font-size: 14px;
+          font-weight: 500;
+          font-family: inherit;
+          border-radius: 6px 0 0 6px;
+          color: $button-text-color;
+          border: 1px solid #cdd9ed;
+          background: #fff;
+          transition: border 0.3s ease;
+          &::placeholder {
+            color: $placeholder-text-color;
+          }
+          &:focus {
+            outline: none;
+            border-color: $main-color;
+          }
+        }
+        button {
+          text-align: center;
+          padding: 8px 12px;
+          font-size: 14px;
+          line-height: 25px;
+          color: $button-text-color;
+          background: $button-background-color;
+          border: 1px solid #ccd7eb;
+          transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+          border-radius: 0 6px 6px 0;
+          cursor: pointer;
+
+          &:hover {
+            background: $main-color;
+            border: 1px solid $main-color;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}
