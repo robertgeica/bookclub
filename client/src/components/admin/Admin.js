@@ -1,32 +1,31 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import store from '../../store/store';
+import store from "../../store/store";
 import AddCategory from "./AddCategory";
+import AddBook from "./AddBook";
 import { loadCategories } from "../../actions/category";
 
 const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
+  useEffect(() => {
+    store.dispatch(loadCategories());
+  }, []);
 
-	useEffect(() => {
-		store.dispatch(loadCategories());
-	}, []);
+  console.log(categories);
 
-	console.log(categories);
-	
-	let options = [];
+  let options = [];
   let subcategoryOptions = [];
   categories == null
     ? (options = [])
     : categories.map((c) => {
         let obj = { label: c.categoryName, value: c.categoryName };
         options.push(obj);
-				if(c.subcategories !== undefined) {
-					c.subcategories.map(subc => {
-						let subcategoryObj = { label: subc, value: subc };
-						subcategoryOptions = [...subcategoryOptions, subcategoryObj];
-					})
-				}
-        
+        if (c.subcategories !== undefined) {
+          c.subcategories.map((subc) => {
+            let subcategoryObj = { label: subc, value: subc };
+            subcategoryOptions = [...subcategoryOptions, subcategoryObj];
+          });
+        }
       });
 
   const [selected, setSelected] = useState([]);
@@ -42,6 +41,15 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
           options={options}
           selected={selected}
           setSelected={setSelected}
+        />
+
+        <AddBook
+          selected={selected}
+          setSelected={setSelected}
+          options={options}
+          subcategoryOptions={subcategoryOptions}
+          labelSelected={labelSelected}
+          setLabelSelected={setLabelSelected}
         />
       </div>
     );
