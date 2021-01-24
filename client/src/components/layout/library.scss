@@ -1,13 +1,16 @@
 .library {
-  margin-top: 5em;
+  padding-top: 2em;
+  display: flex;
+  height: 100vh;
 
   .library-categories {
     display: none;
+    padding-top: 2em;
     @media (min-width: $bp-tablet) {
       display: flex;
       flex-direction: column;
-      border-right: 1px solid grey;
       min-width: 15em;
+      box-shadow: 2px 0px 9px 0px rgba(0, 0, 0, 0.35);
 
       p {
         margin: 0.5em 1.2em;

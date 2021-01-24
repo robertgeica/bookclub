@@ -22,3 +22,11 @@ export const DELETE_CATEGORY = 'DELETE_CATEGORY';
 
 export const ADD_SUBCATEGORIES = 'ADD_SUBCATEGORIES';
 
+// books
+export const DATA_LOAD = 'DATA_LOAD';
+export const BOOK_LOAD = 'BOOK_LOAD';
+export const BOOK_LOAD_ERROR = 'BOOK_LOAD_ERROR';
+export const ADD_BOOK = 'ADD_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
+export const DELETE_BOOK = 'DELETE_BOOK';
+
