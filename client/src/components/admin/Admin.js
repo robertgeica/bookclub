@@ -11,7 +11,7 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
     store.dispatch(loadCategories());
   }, []);
 
-  console.log(categories);
+  // console.log(categories);
 
   let options = [];
   let subcategoryOptions = [];
@@ -50,6 +50,7 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
           subcategoryOptions={subcategoryOptions}
           labelSelected={labelSelected}
           setLabelSelected={setLabelSelected}
+          categories={categories}
         />
       </div>
     );

@@ -76,6 +76,7 @@ const AddCategory = ({ categories, options, selected, setSelected }) => {
             onChange={(e) => onChangeSubcategory(e)}
           />
           <button
+            className="btn"
             onClick={(e) =>
               submitSubcategory(
                 e.target.parentNode.parentNode.childNodes[0].childNodes[0]

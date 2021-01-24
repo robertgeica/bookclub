@@ -66,7 +66,7 @@
       display: flex;
       flex-direction: column;
       margin: 2em 0;
-      button {
+      .btn {
         text-align: center;
         padding: 8px 12px;
         font-size: 14px;
@@ -107,7 +107,7 @@
         .dropdown-container {
           width: 100%;
         }
-        & > button, .label,
+        & > .btn, .label,
         .form-field, .form-field-book,
         .dropdown {
           white-space: nowrap;
@@ -140,7 +140,7 @@
           border-radius: 0 6px 6px 0;
         }
     
-        button, .label {
+        .btn, .label {
           text-align: center;
           padding: 8px 12px;
           font-size: 14px;
@@ -167,51 +167,6 @@
       }
     }
   }
-
-  // .search {
-  //   display: flex;
-  //   flex-direction: column;
-  //   align-items: center;
-  //   justify-content: center;
-  //   margin-bottom: 2em;
-  //   margin-top: 1em;
-
-    
-  // }
-
-  // .add {
-  //   display: flex;
-  //   flex-wrap: wrap;
-
-  //   .btn {
-  //     color: #1f2643;
-  //     font-size: 14px;
-  //     text-decoration: none;
-  //     margin: 1rem;
-  //     padding: 0.5rem;
-  //     border: 2px solid #88cfed;
-  //     border-radius: 0.5rem;
-  //     position: relative;
-  //     top: 0;
-  //     transition: all 300ms ease-in-out;
-  //     box-shadow: 0 0.6em #88cfed, 0 0.9em #e0e5f0;
-  //     outline: none;
-  //     cursor: pointer;
-
-  //     width: 15em;
-  //     &:hover {
-  //       background: #88cfed;
-  //       color: black;
-  //     }
-
-  //     &:active {
-  //       top: 0.6em;
-  //       box-shadow: 0 0.2em rgba(0, 0, 0, 0.4);
-  //       outline: none;
-  //     }
-  //   }
-  // }
-
 
 
 

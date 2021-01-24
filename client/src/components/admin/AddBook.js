@@ -8,7 +8,7 @@ import {
 } from "../../actions/category";
 import { handleAddBook } from "../../actions/book";
 
-const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSelected, setLabelSelected }) => {
+const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSelected, setLabelSelected, categories }) => {
   const [isbn, setIsbn] = useState();
   const onChange = (isbn) => {
     setIsbn(isbn);
@@ -98,6 +98,20 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
     }
   };
   const submitBook = () => {
+    let arr = [];
+    let categsInputArray = bookObj.category;
+    categories.map(category => {
+
+      categsInputArray.map(cc => {
+        if(category.categoryName == cc) {
+          arr.push(category);
+        }
+      })
+    });
+    
+    let categoryId = [];
+    arr.map(category => categoryId.push({"categoryId": category._id}));
+    bookObj.category = categoryId;
     console.log(bookObj);
     store.dispatch(handleAddBook(bookObj));
     setBookObj({});
