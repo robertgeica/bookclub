@@ -1,4 +1,4 @@
-import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK, DELETE_CATEGORY } from '../action/types';
+import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK, DELETE_BOOK } from '../actions/types';
 
 
 const initialState = {
