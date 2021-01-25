@@ -1,8 +1,8 @@
 .library {
-  padding-top: 2em;
+  padding-top: 5em;
   display: flex;
   height: 100vh;
-
+ 
   .library-categories {
     display: none;
     padding-top: 2em;
@@ -75,22 +75,18 @@
         max-width: 100vw;
         overflow-x: scroll;
         scroll-direction: horizontal;
-        /* width */
         &::-webkit-scrollbar {
           height: 0.5em;
         }
-        /* Track */
         &::-webkit-scrollbar-track {
           background: #f1f1f1;
         }
 
-        /* Handle */
         &::-webkit-scrollbar-thumb {
           border-radius: 15px;
           background: #888;
         }
 
-        /* Handle on hover */
         &::-webkit-scrollbar-thumb:hover {
           background: #555;
         }

@@ -22,7 +22,7 @@ const Library = ({ data, categories }) => {
             <p>Categorii</p>
             <ul className="categories-list">
               {categories.map((categ) => (
-                <Link to={`/library/category/${categ.categoryName}`}>
+                <Link to={`/library/category/${categ._id}`}>
                   {categ.categoryName}
                 </Link>
               ))}
@@ -36,14 +36,14 @@ const Library = ({ data, categories }) => {
                   <div className="category-name">
                     <Link
                       className="category"
-                      to={`/library/category/${categ.categoryName}`}
+                      to={`/library/category/${categ._id}`}
                     >
                       {categ.categoryName}
                     </Link>
 
                     <Link
                       className="category"
-                      to={`/library/category/${categ.categoryName}`}
+                      to={`/library/category/${categ._id}`}
                     >
                       Vezi mai multe
                     </Link>
