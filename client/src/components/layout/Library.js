@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import store from "../../store/store";
 
+
 import { loadData, loadBook } from "../../actions/book";
 import { loadCategories } from "../../actions/category";
+
+
+import ScrollContainer from 'react-indiana-drag-scroll'
+
 
 const Library = ({ data, categories }) => {
   useEffect(() => {
@@ -14,6 +19,8 @@ const Library = ({ data, categories }) => {
 
   return (
     <div className="library">
+
+
       {categories == null ? (
         ""
       ) : (
@@ -32,6 +39,7 @@ const Library = ({ data, categories }) => {
           <div className="library-books">
             {categories.map((categ) => (
               <Fragment>
+
                 <div className="category-row">
                   <div className="category-name">
                     <Link
@@ -50,6 +58,7 @@ const Library = ({ data, categories }) => {
                   </div>
 
                   <div className="books-row">
+          <ScrollContainer className="scroll-container">
                     {data.data !== null && data.data !== undefined ? (
                       data.data.map((book) => {
                         let flag = false;
@@ -87,8 +96,10 @@ const Library = ({ data, categories }) => {
                     ) : (
                       <Fragment></Fragment>
                     )}
+</ScrollContainer>
                   </div>
                 </div>
+                
               </Fragment>
             ))}
           </div>
