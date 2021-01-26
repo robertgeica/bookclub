@@ -61,6 +61,7 @@ router.post('/:id', auth, async (req, res) => {
     if (!category) res.status(404).send('No Category to add a subcategory to.');
 
     category.categoryName = req.body.categoryName;
+    category.categoryImage = req.body.categoryImage;
     category.subcategories = req.body.subcategories;
 
 
@@ -105,8 +106,10 @@ router.put('/:id', auth, async (req, res) => {
 
     if (!category) res.status(404).send('No category to update');
 
-    roadmap.categoryName = req.body.categoryName;
-    roadmap.subcategories = req.body.subcategories;
+    category.categoryName = req.body.categoryName;
+    category.categoryImage = req.body.categoryImage;
+    category.subcategories = req.body.subcategories;
+
 
     await category.save();
     res.json('Category updated succesfully');

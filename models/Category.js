@@ -6,6 +6,9 @@ const CategorySchema = new Schema({
         type: String,
         required: true
     },
+    categoryImage: {
+        type: String
+    },
     subcategories: []
 });
 
