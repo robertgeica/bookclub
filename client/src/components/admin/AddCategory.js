@@ -9,6 +9,7 @@ import {
 
 const AddCategory = ({ categories, options, selected, setSelected }) => {
   const [categ, setCateg] = useState({});
+  const [categoryImage, setCategoryImage] = useState();
   const onChangeCategory = (e) => {
     const c = {
       categoryName: e,
@@ -17,12 +18,17 @@ const AddCategory = ({ categories, options, selected, setSelected }) => {
     setCateg(c);
   };
 
+  const onChangeCategoryImage = (e) => {
+    setCategoryImage(e);
+  };
+
   const submitCategory = () => {
-    store.dispatch(handleAddCategory(categ));
+    store.dispatch(handleAddCategory(categ, categoryImage));
     console.log("pushed", categ);
     setCateg({});
   };
 
+  
   const [subcategory, setSubcategory] = useState();
   const onChangeSubcategory = (e) => {
     setSubcategory(e.target.value);
@@ -47,6 +53,11 @@ const AddCategory = ({ categories, options, selected, setSelected }) => {
             className="form-field"
             placeholder="category"
             onChange={(e) => onChangeCategory(e.target.value)}
+          />
+          <input
+            className="form-field"
+            placeholder="image url"
+            onChange={(e) => onChangeCategoryImage(e.target.value)}
           />
           <button type="button" className="btn" onClick={submitCategory}>
             Add category

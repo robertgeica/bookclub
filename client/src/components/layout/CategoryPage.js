@@ -27,24 +27,59 @@ const CategoryPage = (props) => {
         });
       });
 
-  console.log("books from this category", booksArr);
+  const [fil, setFil] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filterBy, setFilterBy] = useState('');
+
+  const onFilter = (filter) => {
+    setFilterBy(filter);
+    // console.log(filterBy);
+    setFil([]);
+    let arr = [];
+    booksArr.map((book) => {
+      book.subcategories.length == undefined
+        ? (book.subcategories = [])
+        : book.subcategories.map((s) => {
+            if (filter === s) {
+              arr.push(book);
+            }
+          });
+    });
+    setFil(arr);
+  };
+
+  let booksToDisplay = booksArr;
+  isFiltered ? booksToDisplay = fil : booksToDisplay = booksArr;
+
   return (
     <div className="category-container">
       {category !== undefined && category !== null ? (
         <div className="category">
-
-          <div className="library-categories">
-            <p>Subcategorii</p>
+          <div
+            className="library-categories"
+            style={{ 
+              backgroundImage: `url(${category.categoryImage})` 
+            }}
+          >
             <ul className="categories-list">
               {category.subcategories.map((subcategory) => (
-                <Link to={`/`}>{subcategory}</Link>
+                <a onClick={() => {
+                  onFilter(subcategory);
+                  setIsFiltered(!isFiltered);
+                
+                }}
+                id={`${isFiltered && filterBy == subcategory ? 'selectedSubcategory' : ''}`}
+                
+                >{subcategory}</a>
               ))}
             </ul>
           </div>
 
-          <p>{category.categoryName} <span>({booksArr.length})</span></p>
+          <p>
+            {category.categoryName} <span>({booksArr.length})</span>
+          </p>
           <div className="books">
-            {booksArr.map((book) => (
+            {booksToDisplay.map((book) => (
               <div className="book">
                 <Link
                   to={`/library/book/${book._id}`}

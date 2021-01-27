@@ -36,7 +36,7 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
         rating: 0,
 
         category: bk.categories == undefined ? "" : bk.categories,
-        labels: bk.labels == undefined ? "" : bk.labels,
+        subcategories: bk.subcategories == undefined ? "" : bk.subcategories,
         rating: 0,
 
         description: bk.description == undefined ? "" : bk.description,
@@ -90,7 +90,7 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
         selectedLabels = [...selectedLabels, v.value];
       });
 
-      setBookObj({ ...bookObj, labels: selectedLabels });
+      setBookObj({ ...bookObj, subcategories: selectedLabels });
     } else {
       console.log("els");
       const { name, value } = e.target;

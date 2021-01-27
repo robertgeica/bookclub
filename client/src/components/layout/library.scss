@@ -9,7 +9,7 @@
     @media (min-width: $bp-tablet) {
       display: flex;
       flex-direction: column;
-      min-width: 15em;
+      min-width: 14em;
       // box-shadow: 2px 0px 9px 0px rgba(0, 0, 0, 0.35);
 
       p {
@@ -22,12 +22,12 @@
       .categories-list {
         display: flex;
         flex-direction: column;
-        padding: 0 1em 0 0.5em;
+        padding: 0 0 0 0.5em;
         border-right: 1px solid $placeholder-text-color;
 
         a {
           color: #666;
-          padding: 0.25em 1em;
+          padding: 0.25em 0 0.25em 1em;
           text-decoration: none;
           transition: 0.2s;
           border-left: 2px solid #fff !important;
@@ -45,8 +45,16 @@
   .library-books {
     display: flex;
     flex-direction: column;
-    margin: 2em;
-    width: 70%;
+    margin: 2em 0 2em 2em;
+    max-width: 70%;
+
+    @media (max-width: $bp-laptop) {
+      max-width: 65%;
+    }
+
+    @media (max-width: $bp-tablet) {
+      max-width: 90%;
+    }
 
     .category-row {
       margin-bottom: 1em;

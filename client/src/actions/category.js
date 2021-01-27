@@ -31,14 +31,16 @@ export const loadCategories = () => async (dispatch) => {
     }
   };
   
-  export const handleAddCategory = (newCategory) => async (dispatch) => {
+  export const handleAddCategory = (newCategory, image) => async (dispatch) => {
     try {
       const res = await axios.get("/api/category");
   
       const categoryObj = {
         categoryName: newCategory.categoryName,
+        categoryImage: image,
         subcategories: newCategory.subcategories
       };
+      console.log(image, categoryObj);
   
       await axios.post("/api/category", categoryObj);
       const newData = [...res.data, categoryObj];
