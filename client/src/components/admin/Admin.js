@@ -7,6 +7,9 @@ import AddBook from "./AddBook";
 import { loadCategories } from "../../actions/category";
 
 const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
+  // TODO: clean code
+
+
   useEffect(() => {
     store.dispatch(loadCategories());
   }, []);
@@ -28,8 +31,6 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
         }
       });
 
-  const [selected, setSelected] = useState([]);
-  const [labelSelected, setLabelSelected] = useState([]);
 
   if (user == null || user.role == "user") {
     return <Redirect to="/" />;
@@ -39,17 +40,10 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
         <AddCategory
           categories={categories}
           options={options}
-          selected={selected}
-          setSelected={setSelected}
         />
 
         <AddBook
-          selected={selected}
-          setSelected={setSelected}
           options={options}
-          subcategoryOptions={subcategoryOptions}
-          labelSelected={labelSelected}
-          setLabelSelected={setLabelSelected}
           categories={categories}
         />
       </div>

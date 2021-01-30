@@ -8,13 +8,37 @@ import {
 } from "../../actions/category";
 import { handleAddBook } from "../../actions/book";
 
-const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSelected, setLabelSelected, categories }) => {
+const AddBook = ({ options, categories }) => {
+
+  // TODO: clean code
+
   const [isbn, setIsbn] = useState();
+
+  const [selected, setSelected] = useState([]);
+  const [labelSelected, setLabelSelected] = useState([]);
+
   const onChange = (isbn) => {
     setIsbn(isbn);
   };
   const [bookObj, setBookObj] = useState({});
+  // show only subcategories of selected categories
+  let subcategoryOptions = [];
+  selected == null && selected == undefined ? subcategoryOptions = [] :
+  selected.map(selectedCategory => {
+    categories.map(category => {
+      if(selectedCategory.value == category.categoryName) {
+        category.subcategories.map(subcategory => {
+          let subcategoryObj = { label: subcategory, value: subcategory };
+          subcategoryOptions = [...subcategoryOptions, subcategoryObj];
+        });
+
+      }
+    });
+  });
+
+  
   const searchBook = async () => {
+    setBookObj({});
     try {
       const response = await fetch(
         `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
@@ -34,9 +58,10 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
 
         author: bk.authors == undefined ? "" : bk.authors[0],
         rating: 0,
-
-        category: bk.categories == undefined ? "" : bk.categories,
-        subcategories: bk.subcategories == undefined ? "" : bk.subcategories,
+        category: [],
+        subcategories: [],
+        // category: bk.categories == undefined ? "" : bk.categories,
+        // subcategories: bk.subcategories == undefined ? "" : bk.subcategories,
         rating: 0,
 
         description: bk.description == undefined ? "" : bk.description,
@@ -46,7 +71,7 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
         pages: bk.pageCount ? bk.pageCount : 0,
         isReaded: false,
         format: "-",
-        fileName: '',
+        fileName: "",
         isbn: isbn,
       };
       console.log(newObj);
@@ -58,81 +83,59 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
     }
   };
 
- 
-
   useEffect(() => {
     store.dispatch(loadCategories());
   }, [bookObj]);
 
- 
-
   const handleChange = (e) => {
-    if (e.target.type == "checkbox") {
-      let selectedCategory = [];
-      
-      selected.map((v) => {
-        selectedCategory = [...selectedCategory, v.value];
-      });
-
-      setBookObj({ ...bookObj, category: selectedCategory });
-    } else {
-      const { name, value } = e.target;
-      setBookObj({ ...bookObj, [name]: value });
-    }
+    const { name, value } = e.target;
+    setBookObj({ ...bookObj, [name]: value });
   };
 
+  let selectedLabels = [];
 
-  const handleChangeLabel = (e) => {
-    if (e.target.type == "checkbox") {
-      let selectedLabels = [];
-      
-      labelSelected.map((v) => {
-        selectedLabels = [...selectedLabels, v.value];
-      });
+  labelSelected.map((v) => {
+    selectedLabels = [...selectedLabels, v.value];
+  });
 
-      setBookObj({ ...bookObj, subcategories: selectedLabels });
-    } else {
-      console.log("els");
-      const { name, value } = e.target;
-      setBookObj({ ...bookObj, [name]: value });
-    }
-  };
+  let selectedCategory = [];
+
+  selected.map((v) => {
+    selectedCategory = [...selectedCategory, v.value];
+  });
+
   const submitBook = () => {
     let arr = [];
-    let categsInputArray = bookObj.category;
-    categories.map(category => {
-
-      categsInputArray.map(cc => {
-        if(category.categoryName == cc) {
+    let categsInputArray = selectedCategory;
+    categories.map((category) => {
+      categsInputArray.map((cc) => {
+        if (category.categoryName == cc) {
           arr.push(category);
         }
-      })
+      });
     });
-    
+
     let categoryId = [];
-    arr.map(category => categoryId.push({"categoryId": category._id}));
+    arr.map((category) => categoryId.push({ categoryId: category._id }));
     bookObj.category = categoryId;
+    bookObj.subcategories = selectedLabels;
     console.log(bookObj);
     store.dispatch(handleAddBook(bookObj));
     setBookObj({});
   };
 
-  
+
 
   return (
     <div className="category">
       <div className="category-form">
         <form className="form">
           <input
-            className="form-field-book"
+            className="form-field"
             placeholder="isbn"
             onChange={(e) => onChange(e.target.value)}
           />
-          <button
-            type="button"
-            className="btn"
-            onClick={searchBook}
-          >
+          <button type="button" className="btn" onClick={searchBook}>
             SEARCH
           </button>
         </form>
@@ -172,7 +175,7 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
         <div className="inp">
           <span className="label">Categorie</span>
 
-          <div className="dropdown-container" onChange={(e) => handleChange(e)}>
+          <div className="dropdown-container">
             <MultiSelect
               name="category"
               className="dropdown"
@@ -180,15 +183,15 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
               value={selected}
               onChange={setSelected}
               labelledBy={"Select"}
+              hasSelectAll={false}
             />
           </div>
-
         </div>
 
         <div className="inp">
           <span className="label">Subcategory</span>
 
-          <div className="dropdown-container" onChange={(e) => handleChangeLabel(e)}>
+          <div className="dropdown-container">
             <MultiSelect
               name="category"
               className="dropdown"
@@ -196,9 +199,9 @@ const AddBook = ({ selected, setSelected, options, subcategoryOptions, labelSele
               value={labelSelected}
               onChange={setLabelSelected}
               labelledBy={"Select"}
+              hasSelectAll={false}
             />
           </div>
-
         </div>
 
         <div className="inp">

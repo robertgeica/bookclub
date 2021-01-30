@@ -7,9 +7,17 @@ import {
   handleAddSubcategory,
 } from "../../actions/category";
 
-const AddCategory = ({ categories, options, selected, setSelected }) => {
+const AddCategory = ({ categories, options }) => {
+
+  // TODO: clean code
+
+
   const [categ, setCateg] = useState({});
   const [categoryImage, setCategoryImage] = useState();
+    
+  const [selected, setSelected] = useState([]);
+
+
   const onChangeCategory = (e) => {
     const c = {
       categoryName: e,
@@ -55,6 +63,7 @@ const AddCategory = ({ categories, options, selected, setSelected }) => {
             onChange={(e) => onChangeCategory(e.target.value)}
           />
           <input
+            id="middle-form-field"
             className="form-field"
             placeholder="image url"
             onChange={(e) => onChangeCategoryImage(e.target.value)}
