@@ -19,6 +19,11 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/category', require('./routes/api/category'));
 app.use('/api/books', require('./routes/api/books'));
 
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

@@ -1,10 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import store from "../../store/store";
 import MultiSelect from "react-multi-select-component";
 import {
-  handleAddCategory,
   loadCategories,
-  handleAddLabel,
 } from "../../actions/category";
 import { handleAddBook } from "../../actions/book";
 

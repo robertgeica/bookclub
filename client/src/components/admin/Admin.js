@@ -1,10 +1,11 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import store from "../../store/store";
 import AddCategory from "./AddCategory";
 import AddBook from "./AddBook";
 import { loadCategories } from "../../actions/category";
+
 
 const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
   // TODO: clean code
@@ -32,11 +33,12 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
       });
 
 
-  if (user == null || user.role == "user") {
+  if (user === null || user.role === "user") {
     return <Redirect to="/" />;
   } else {
     return (
       <div className="admin">
+
         <AddCategory
           categories={categories}
           options={options}

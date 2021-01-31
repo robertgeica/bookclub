@@ -3,13 +3,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import store from "../../store/store";
 
-
 import { loadData, loadBook } from "../../actions/book";
 import { loadCategories } from "../../actions/category";
 
-
-import ScrollContainer from 'react-indiana-drag-scroll'
-
+import ScrollContainer from "react-indiana-drag-scroll";
 
 const Library = ({ data, categories }) => {
   useEffect(() => {
@@ -19,8 +16,6 @@ const Library = ({ data, categories }) => {
 
   return (
     <div className="library">
-
-
       {categories == null ? (
         ""
       ) : (
@@ -29,7 +24,7 @@ const Library = ({ data, categories }) => {
             <p>Categorii</p>
             <ul className="categories-list">
               {categories.map((categ) => (
-                <Link to={`/library/category/${categ._id}`}>
+                <Link key={categ._id} to={`/library/category/${categ._id}`}>
                   {categ.categoryName}
                 </Link>
               ))}
@@ -38,8 +33,7 @@ const Library = ({ data, categories }) => {
 
           <div className="library-books">
             {categories.map((categ) => (
-              <Fragment>
-
+              <Fragment key={categ._id} >
                 <div className="category-row">
                   <div className="category-name">
                     <Link
@@ -58,48 +52,47 @@ const Library = ({ data, categories }) => {
                   </div>
 
                   <div className="books-row">
-          <ScrollContainer className="scroll-container">
-                    {data.data !== null && data.data !== undefined ? (
-                      data.data.map((book) => {
-                        let flag = false;
+                    <ScrollContainer className="scroll-container">
+                      {data.data !== null && data.data !== undefined ? (
+                        data.data.map((book) => {
+                          let flag = false;
 
-                        book.category.map((c) => {
-                          c.categoryId == categ._id
-                            ? (flag = true)
-                            : (flag = false);
-                        });
+                          book.category.map((c) => {
+                            c.categoryId == categ._id
+                              ? (flag = true)
+                              : (flag = false);
+                          });
 
-                        if (flag)
-                          return (
-                            <div className="book">
-                              <Link
-                                to={`/library/book/${book._id}`}
-                                onClick={() =>
-                                  store.dispatch(loadBook(book._id))
-                                }
-                              >
-                                <img src={book.imageUrl} />
-                              </Link>
-                              <Link
-                                className="titlu"
-                                to={`/library/book/${book._id}`}
-                                onClick={() =>
-                                  store.dispatch(loadBook(book._id))
-                                }
-                              >
-                                {book.title}
-                              </Link>
-                              <p id="autor">{book.author}</p>
-                            </div>
-                          );
-                      })
-                    ) : (
-                      <Fragment></Fragment>
-                    )}
-</ScrollContainer>
+                          if (flag)
+                            return (
+                              <div key={book._id} className="book">
+                                <Link
+                                  to={`/library/book/${book._id}`}
+                                  onClick={() =>
+                                    store.dispatch(loadBook(book._id))
+                                  }
+                                >
+                                  <img src={book.imageUrl} />
+                                </Link>
+                                <Link
+                                  className="titlu"
+                                  to={`/library/book/${book._id}`}
+                                  onClick={() =>
+                                    store.dispatch(loadBook(book._id))
+                                  }
+                                >
+                                  {book.title}
+                                </Link>
+                                <p id="autor">{book.author}</p>
+                              </div>
+                            );
+                        })
+                      ) : (
+                        <Fragment></Fragment>
+                      )}
+                    </ScrollContainer>
                   </div>
                 </div>
-                
               </Fragment>
             ))}
           </div>

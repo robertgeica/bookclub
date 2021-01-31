@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK, DELETE_CATEGORY } from './types';
+import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK } from './types';
 
 
 export const loadData = () => async (dispatch) => {
@@ -53,11 +53,8 @@ export const handleAddBook = (newBook) => async (dispatch) => {
       isbn: newBook.isbn,
     };
 
-    const d = await axios.post("/api/books", bookObj);
+    await axios.post("/api/books", bookObj);
     const newData = [...res.data, bookObj];
-
-    const categ = await axios.get('/api/category');
-
 
     dispatch({
       type: ADD_BOOK,

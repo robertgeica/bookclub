@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { CATEGORIES_LOAD, CATEGORY_LOAD, CATEGORY_LOAD_ERROR, ADD_CATEGORY, UPDATE_CATEGORY, DELETE_CATEGORY, ADD_SUBCATEGORIES } from './types';
+import { CATEGORIES_LOAD, CATEGORY_LOAD, CATEGORY_LOAD_ERROR, ADD_CATEGORY, ADD_SUBCATEGORIES } from './types';
 
 export const loadCategories = () => async (dispatch) => {
     try {

@@ -14,7 +14,7 @@ const CategoryPage = (props) => {
   useEffect(() => {
     store.dispatch(loadData());
     store.dispatch(loadCategory(categoryId));
-  }, []);
+  }, [categoryId]);
 
   let booksArr = [];
   books == null
@@ -63,10 +63,10 @@ const CategoryPage = (props) => {
           >
             <ul className="categories-list">
               {category.subcategories.map((subcategory) => (
-                <a onClick={() => {
+                <a key={subcategory} onClick={() => {
                   onFilter(subcategory);
                   setIsFiltered(!isFiltered);
-                
+                  
                 }}
                 id={`${isFiltered && filterBy == subcategory ? 'selectedSubcategory' : ''}`}
                 
@@ -80,7 +80,7 @@ const CategoryPage = (props) => {
           </p>
           <div className="books">
             {booksToDisplay.map((book) => (
-              <div className="book">
+              <div key={book._id} className="book">
                 <Link
                   to={`/library/book/${book._id}`}
                   onClick={() => store.dispatch(loadBook(book._id))}
