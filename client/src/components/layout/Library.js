@@ -22,13 +22,14 @@ const Library = ({ data, categories }) => {
         <Fragment>
           <div className="library-categories">
             <p>Categorii</p>
-            <ul className="categories-list">
+            <ScrollContainer className="scroll-container categories-list">
+
               {categories.map((categ) => (
                 <Link key={categ._id} to={`/library/category/${categ._id}`}>
                   {categ.categoryName}
                 </Link>
               ))}
-            </ul>
+            </ScrollContainer>
           </div>
 
           <div className="library-books">

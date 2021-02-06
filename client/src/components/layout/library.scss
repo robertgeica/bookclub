@@ -1,38 +1,89 @@
 .library {
   padding-top: 5em;
   display: flex;
+  flex-direction: column;
   height: 100vh;
 
+  @media (min-width: $bp-tablet) {
+    flex-direction: row;
+  }
+
   .library-categories {
-    display: none;
+    // display: none;
     padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+    margin: 0 2em;
+
+    p {
+      margin: 0;
+      font-size: 1.1em;
+      font-weight: 550;
+      color: #666;
+    }
+
+    .categories-list {
+      display: flex;
+      flex-direction: row;
+      margin: 0;
+      padding: 0;
+
+      
+      a {
+        margin: auto .5em auto 0;
+        color: #666;
+        text-decoration: none;
+        background-color: #eef4ff;
+        padding: .4em;
+        border-radius: 5px;
+        border: 2px solid #fff;
+        font-weight: 500;
+
+        
+
+        &:hover {
+          color: $second-color;
+          background-color: #eef4ff;
+          border: 2px solid $second-color ;
+        }
+      }
+    }
+
+    
     @media (min-width: $bp-tablet) {
       display: flex;
       flex-direction: column;
       min-width: 14em;
-      // box-shadow: 2px 0px 9px 0px rgba(0, 0, 0, 0.35);
+      margin: 0;
 
+      // box-shadow: 2px 0px 9px 0px rgba(0, 0, 0, 0.35);
       p {
         margin: 0.5em 1.2em;
-        font-size: 1.1em;
-        font-weight: 550;
-        color: #666;
       }
+     
 
       .categories-list {
         display: flex;
         flex-direction: column;
         padding: 0 0 0 0.5em;
         border-right: 1px solid $placeholder-text-color;
-
+        overflow-x: hidden;
         a {
           color: #666;
           padding: 0.25em 0 0.25em 1em;
           text-decoration: none;
           transition: 0.2s;
+          margin: 0;
+          background-color: #fff;
+          border-radius: 0px;
+          border: none;
           border-left: 2px solid #fff !important;
+          font-weight: 400;
+          
+
 
           &:hover {
+            border: none;
             color: $second-color;
             background-color: #eef4ff;
             border-left: 2px solid $second-color !important;
@@ -105,7 +156,7 @@
         // }
 
         .book {
-          margin: 0 1em;
+          margin: 0 1.5em 0 0;
           display: flex;
           flex-direction: column;
           padding-top: 1em;
