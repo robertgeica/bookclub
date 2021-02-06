@@ -17,11 +17,85 @@
     }
 
     .category-form {
+      .inp {
+        display: flex;
+        
+        .dropdown-container {
+          width: 100%;
+        }
+        & > .btn, .label,
+        .form-field, .form-field-book {
+          white-space: nowrap;
+          display: block;
+          margin: 0.5em 0;
+          box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+        }
+        .form-field, .form-field-book {
+          display: block;
+          width: 100%;
+          padding: 8px 16px;
+          line-height: 25px;
+          font-size: 14px;
+          font-weight: 500;
+          font-family: inherit;
+          border-radius: 6px 0 0 6px;
+          color: $button-text-color;
+          border: 1px solid #cdd9ed;
+          background: #fff;
+          transition: border 0.3s ease;
+          &::placeholder {
+            color: $placeholder-text-color;
+          }
+          &:focus {
+            outline: none;
+            border-color: $main-color;
+          }
+        }
+        .form-field-book {
+          border-radius: 0 6px 6px 0;
+        }
+
+        .upload {
+          border-radius: 0;
+          border-right: 0;
+          border-left: 0;
+        }
+
+        
+    
+        .btn, .label {
+          text-align: center;
+          padding: 8px 12px;
+          font-size: 14px;
+          margin: 0 0 .5em 0;
+          line-height: 25px;
+          color: $button-text-color;
+          background: $button-background-color;
+          border: 1px solid #ccd7eb;
+          transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+          cursor: pointer;
+
+          &:hover {
+            background: $main-color;
+            border: 1px solid $main-color;
+            color: #fff;
+          }
+        }
+
+        .label {
+          border-radius: 6px 0 0 6px;
+          cursor: default;
+          width: 20%;
+        }
+      }
+
+
+      
       .form {
         margin: auto;
         display: flex;
         flex-direction: column;
-
+          
         .form-field {
           background: #fff;
           color: #000;
@@ -147,6 +221,16 @@
         .form-field-book {
           border-radius: 0 6px 6px 0;
         }
+
+        .upload {
+          border-radius: 0;
+          border-right: 0;
+          border-left: 0;
+        }
+
+        .select {
+          border-radius: 6px 0 0 6px !important;
+        }
     
         .btn, .label {
           text-align: center;
@@ -179,3 +263,10 @@
 
 
 }
+
+
+.hide {
+  visibility: hidden;
+  display: none;
+}
+

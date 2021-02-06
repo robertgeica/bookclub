@@ -17,6 +17,7 @@ import ResetPassword from './components/auth/ResetPassword';
 import Admin from './components/admin/Admin';
 import Library from './components/layout/Library';
 import CategoryPage from './components/layout/CategoryPage';
+import BookPage from './components/layout/BookPage';
 
 import './app.scss';
 
@@ -43,6 +44,7 @@ const App = () => {
           <Route exact path="/admin" component={Admin} />
           <Route exact path="/library" component={Library} />
           <Route exact path="/library/category/:id" component={CategoryPage} />
+          <Route exact path="/library/book/:id" component={BookPage} />
         </Switch>
       </Router>
     </Provider>

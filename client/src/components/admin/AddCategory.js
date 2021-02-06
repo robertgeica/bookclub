@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import store from "../../store/store";
 import MultiSelect from "react-multi-select-component";
+import axios from "axios";
 
 import {
   handleAddCategory,
@@ -8,15 +9,12 @@ import {
 } from "../../actions/category";
 
 const AddCategory = ({ categories, options }) => {
-
   // TODO: clean code
-
 
   const [categ, setCateg] = useState({});
   const [categoryImage, setCategoryImage] = useState();
-    
-  const [selected, setSelected] = useState([]);
 
+  const [selected, setSelected] = useState([]);
 
   const onChangeCategory = (e) => {
     const c = {
@@ -36,7 +34,6 @@ const AddCategory = ({ categories, options }) => {
     setCateg({});
   };
 
-  
   const [subcategory, setSubcategory] = useState();
   const onChangeSubcategory = (e) => {
     setSubcategory(e.target.value);
@@ -53,6 +50,20 @@ const AddCategory = ({ categories, options }) => {
     }
   };
 
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const onFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const onFileUpload = async () => {
+    const formData = new FormData();
+    console.log(selectedFile);
+    formData.append("file", selectedFile, selectedFile.name);
+
+    await axios.post("api/fileupload", formData);
+  };
+
   return (
     <div className="category">
       <div className="category-form">
@@ -62,12 +73,30 @@ const AddCategory = ({ categories, options }) => {
             placeholder="category"
             onChange={(e) => onChangeCategory(e.target.value)}
           />
-          <input
-            id="middle-form-field"
-            className="form-field"
-            placeholder="image url"
-            onChange={(e) => onChangeCategoryImage(e.target.value)}
-          />
+
+          <div className="inp">
+            <label htmlFor="categFile" className="btn select">
+              Select Cover
+            </label>
+            <input
+              id="categFile"
+              onChange={(e) => onFileChange(e)}
+              className=" hide"
+              type="file"
+            />
+            <input
+              className="form-field upload"
+              name="imageUrl"
+              placeholder={selectedFile == null ? "" : selectedFile.name}
+              defaultValue={selectedFile == null ? "" : selectedFile.name}
+              id="middle-form-field"
+              onChange={(e) => onChangeCategoryImage(e.target.value)}
+            />
+            <span className="btn" onClick={onFileUpload}>
+              Upload
+            </span>
+          </div>
+
           <button type="button" className="btn" onClick={submitCategory}>
             Add category
           </button>

@@ -21,6 +21,7 @@ export const loadBook = (id) => async (dispatch) => {
   try {
     const res = await axios.get("/api/books/" + id);
 
+    
     dispatch({
       type: BOOK_LOAD,
       payload: res.data,

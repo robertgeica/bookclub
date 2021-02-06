@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import store from "../../store/store";
 import MultiSelect from "react-multi-select-component";
-import {
-  loadCategories,
-} from "../../actions/category";
+import { loadCategories } from "../../actions/category";
 import { handleAddBook } from "../../actions/book";
+import axios from 'axios';
+
 
 const AddBook = ({ options, categories }) => {
-
-  // TODO: clean code
 
   const [isbn, setIsbn] = useState();
 
@@ -21,20 +19,19 @@ const AddBook = ({ options, categories }) => {
   const [bookObj, setBookObj] = useState({});
   // show only subcategories of selected categories
   let subcategoryOptions = [];
-  selected == null && selected == undefined ? subcategoryOptions = [] :
-  selected.map(selectedCategory => {
-    categories.map(category => {
-      if(selectedCategory.value == category.categoryName) {
-        category.subcategories.map(subcategory => {
-          let subcategoryObj = { label: subcategory, value: subcategory };
-          subcategoryOptions = [...subcategoryOptions, subcategoryObj];
+  selected == null && selected == undefined
+    ? (subcategoryOptions = [])
+    : selected.map((selectedCategory) => {
+        categories.map((category) => {
+          if (selectedCategory.value == category.categoryName) {
+            category.subcategories.map((subcategory) => {
+              let subcategoryObj = { label: subcategory, value: subcategory };
+              subcategoryOptions = [...subcategoryOptions, subcategoryObj];
+            });
+          }
         });
+      });
 
-      }
-    });
-  });
-
-  
   const searchBook = async () => {
     setBookObj({});
     try {
@@ -83,7 +80,7 @@ const AddBook = ({ options, categories }) => {
 
   useEffect(() => {
     store.dispatch(loadCategories());
-  }, [bookObj]);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,6 +119,19 @@ const AddBook = ({ options, categories }) => {
     setBookObj({});
   };
 
+  const [selectedBookCover, setSelectedBookCover] = useState(null);
+
+  const onBookChange = (e) => {
+    setSelectedBookCover(e.target.files[0]);
+  };
+
+  const onBookUpload = async () => {
+    const formData = new FormData();
+    console.log(selectedBookCover);
+    formData.append("file", selectedBookCover, selectedBookCover.name);
+
+    await axios.post("api/fileupload", formData);
+  };
 
 
   return (
@@ -212,16 +222,31 @@ const AddBook = ({ options, categories }) => {
             onChange={(e) => handleChange(e)}
           />
         </div>
+
+        
         <div className="inp">
-          <span className="label">Link img</span>
+          <label htmlFor="file" className="btn select">
+            Select Cover
+          </label>
           <input
-            className="form-field-book"
-            placeholder="image"
-            name="image"
-            defaultValue={bookObj.image}
+            id="file"
+            onChange={e => onBookChange(e)}
+            className=" hide"
+            type="file"
+          />
+          <input
+            className="form-field-book upload"
+            name="imageUrl"
+            placeholder={selectedBookCover == null ? "" : selectedBookCover.name}
+            defaultValue={selectedBookCover == null ? "" : selectedBookCover.name}
             onChange={(e) => handleChange(e)}
           />
+          <span className="btn" onClick={onBookUpload}>
+            Upload
+          </span>
         </div>
+
+
         <div className="inp">
           <span className="label">Limba</span>
           <input
