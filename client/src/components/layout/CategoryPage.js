@@ -10,6 +10,11 @@ const CategoryPage = (props) => {
   const categoryId = props.match.params.id;
   const books = props.data;
   const category = props.category;
+  
+  const [fil, setFil] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filterBy, setFilterBy] = useState('');
+
 
   useEffect(() => {
     store.dispatch(loadData());
@@ -27,20 +32,16 @@ const CategoryPage = (props) => {
         });
       });
 
-  const [fil, setFil] = useState([]);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const [filterBy, setFilterBy] = useState('');
 
   const onFilter = (filter) => {
     setFilterBy(filter);
-    // console.log(filterBy);
     setFil([]);
     let arr = [];
     booksArr.map((book) => {
       book.subcategories.length == undefined
         ? (book.subcategories = [])
-        : book.subcategories.map((s) => {
-            if (filter === s) {
+        : book.subcategories.map((subcategory) => {
+            if (filter === subcategory) {
               arr.push(book);
             }
           });

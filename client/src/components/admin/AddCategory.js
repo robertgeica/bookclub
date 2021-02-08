@@ -9,19 +9,17 @@ import {
 } from "../../actions/category";
 
 const AddCategory = ({ categories, options }) => {
-  // TODO: clean code
 
-  const [categ, setCateg] = useState({});
+  const [category, setCategory] = useState({});
   const [categoryImage, setCategoryImage] = useState();
-
   const [selected, setSelected] = useState([]);
 
   const onChangeCategory = (e) => {
-    const c = {
+    const category = {
       categoryName: e,
       subcategories: [],
     };
-    setCateg(c);
+    setCategory(category);
   };
 
   const onChangeCategoryImage = (e) => {
@@ -29,9 +27,9 @@ const AddCategory = ({ categories, options }) => {
   };
 
   const submitCategory = () => {
-    store.dispatch(handleAddCategory(categ, categoryImage));
-    console.log("pushed", categ);
-    setCateg({});
+    store.dispatch(handleAddCategory(category, categoryImage));
+    // console.log("pushed", category);
+    setCategory({});
   };
 
   const [subcategory, setSubcategory] = useState();
@@ -39,26 +37,25 @@ const AddCategory = ({ categories, options }) => {
     setSubcategory(e.target.value);
   };
 
-  const submitSubcategory = (categName) => {
-    console.log(categName);
-    if (categName.includes(",")) {
+  const submitSubcategory = (categoryName) => {
+    // console.log(categoryName);
+    if (categoryName.includes(",")) {
       console.log("Warning! Select just one category.");
     } else {
-      const cat = categories.filter((c) => categName == c.categoryName);
+      const cat = categories.filter((category) => categoryName == category.categoryName);
       const id = cat[0]._id;
       store.dispatch(handleAddSubcategory(id, subcategory));
     }
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
-
   const onFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
 
   const onFileUpload = async () => {
     const formData = new FormData();
-    console.log(selectedFile);
+    // console.log(selectedFile);
     formData.append("file", selectedFile, selectedFile.name);
 
     await axios.post("api/fileupload", formData);

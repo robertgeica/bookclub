@@ -37,8 +37,6 @@ export const handleAddBook = (newBook) => async (dispatch) => {
   try {
     const res = await axios.get("/api/books");
 
-    
-
     const bookObj = {
       title: newBook.title,
       author: newBook.author,

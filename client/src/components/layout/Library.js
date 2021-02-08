@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
+import ScrollContainer from "react-indiana-drag-scroll";
 import { connect } from "react-redux";
 import store from "../../store/store";
 
 import { loadData, loadBook } from "../../actions/book";
 import { loadCategories } from "../../actions/category";
 
-import ScrollContainer from "react-indiana-drag-scroll";
 
 const Library = ({ data, categories }) => {
   useEffect(() => {

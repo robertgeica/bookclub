@@ -9,14 +9,14 @@ import axios from 'axios';
 const AddBook = ({ options, categories }) => {
 
   const [isbn, setIsbn] = useState();
-
   const [selected, setSelected] = useState([]);
-  const [labelSelected, setLabelSelected] = useState([]);
+  const [categorySelected, setCategorySelected] = useState([]);
+  const [bookObj, setBookObj] = useState({});
 
   const onChange = (isbn) => {
     setIsbn(isbn);
   };
-  const [bookObj, setBookObj] = useState({});
+  
   // show only subcategories of selected categories
   let subcategoryOptions = [];
   selected == null && selected == undefined
@@ -39,29 +39,22 @@ const AddBook = ({ options, categories }) => {
         `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`
       );
       const book = await response.json();
-      // console.log(book)
-
       const bk = book.items[0].volumeInfo;
-      console.log(bk);
+      // console.log(bk);
+        
 
-      if (bk.description == undefined) {
-        console.log("undef");
-      }
 
       const newObj = {
         title: bk.title ? bk.title : "",
-
         author: bk.authors == undefined ? "" : bk.authors[0],
         rating: 0,
         category: [],
         subcategories: [],
-        // category: bk.categories == undefined ? "" : bk.categories,
-        // subcategories: bk.subcategories == undefined ? "" : bk.subcategories,
         rating: 0,
-
         description: bk.description == undefined ? "" : bk.description,
-
-        image: bk.imageLinks == undefined ? "" : bk.imageLinks.thumbnail,
+        imageUrl: selectedBookCover == null ? 
+                  bk.imageLinks == undefined ? "" : bk.imageLinks.thumbnail
+                  : selectedBookCover,
         language: "",
         pages: bk.pageCount ? bk.pageCount : 0,
         isReaded: false,
@@ -69,41 +62,40 @@ const AddBook = ({ options, categories }) => {
         fileName: "",
         isbn: isbn,
       };
-      console.log(newObj);
+      // console.log(newObj);
       setBookObj(newObj);
 
-      // console.log(newObj);
     } catch (error) {
       console.log("book not found. complete manually");
     }
   };
 
+
   useEffect(() => {
     store.dispatch(loadCategories());
   }, []);
 
-  const handleChange = (e) => {
+  const handleChangeBook = (e) => {
     const { name, value } = e.target;
     setBookObj({ ...bookObj, [name]: value });
   };
 
-  let selectedLabels = [];
 
-  labelSelected.map((v) => {
-    selectedLabels = [...selectedLabels, v.value];
+  let selectedSubcategories = [];
+  categorySelected.map((v) => {
+    selectedSubcategories = [...selectedSubcategories, v.value];
   });
 
   let selectedCategory = [];
-
   selected.map((v) => {
     selectedCategory = [...selectedCategory, v.value];
   });
 
   const submitBook = () => {
     let arr = [];
-    let categsInputArray = selectedCategory;
+    // let categsInputArray = selectedCategory;
     categories.map((category) => {
-      categsInputArray.map((cc) => {
+      selectedCategory.map((cc) => {
         if (category.categoryName == cc) {
           arr.push(category);
         }
@@ -113,12 +105,14 @@ const AddBook = ({ options, categories }) => {
     let categoryId = [];
     arr.map((category) => categoryId.push({ categoryId: category._id }));
     bookObj.category = categoryId;
-    bookObj.subcategories = selectedLabels;
-    console.log(bookObj);
+    bookObj.subcategories = selectedSubcategories;
+    // console.log(bookObj);
     store.dispatch(handleAddBook(bookObj));
     setBookObj({});
   };
 
+
+  // book cover
   const [selectedBookCover, setSelectedBookCover] = useState(null);
 
   const onBookChange = (e) => {
@@ -127,7 +121,7 @@ const AddBook = ({ options, categories }) => {
 
   const onBookUpload = async () => {
     const formData = new FormData();
-    console.log(selectedBookCover);
+    // console.log(selectedBookCover);
     formData.append("file", selectedBookCover, selectedBookCover.name);
 
     await axios.post("api/fileupload", formData);
@@ -157,7 +151,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="title"
             name="title"
             defaultValue={bookObj.title}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -167,7 +161,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="author"
             name="author"
             defaultValue={bookObj.author}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -177,7 +171,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="rating"
             name="rating"
             defaultValue={bookObj.rating}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -204,8 +198,8 @@ const AddBook = ({ options, categories }) => {
               name="category"
               className="dropdown"
               options={subcategoryOptions}
-              value={labelSelected}
-              onChange={setLabelSelected}
+              value={categorySelected}
+              onChange={setCategorySelected}
               labelledBy={"Select"}
               hasSelectAll={false}
             />
@@ -219,7 +213,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="description"
             name="description"
             defaultValue={bookObj.description}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
 
@@ -239,7 +233,7 @@ const AddBook = ({ options, categories }) => {
             name="imageUrl"
             placeholder={selectedBookCover == null ? "" : selectedBookCover.name}
             defaultValue={selectedBookCover == null ? "" : selectedBookCover.name}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
           <span className="btn" onClick={onBookUpload}>
             Upload
@@ -254,7 +248,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="language"
             name="language"
             defaultValue={bookObj.language}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -264,7 +258,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="pages"
             name="pages"
             defaultValue={bookObj.pages}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -274,7 +268,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="format"
             name="format"
             defaultValue={bookObj.format}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -284,7 +278,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="file name"
             name="fileName"
             defaultValue={bookObj.fileName}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
         <div className="inp">
@@ -294,7 +288,7 @@ const AddBook = ({ options, categories }) => {
             placeholder="isbn"
             name="isbn"
             defaultValue={bookObj.isbn}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleChangeBook(e)}
           />
         </div>
 

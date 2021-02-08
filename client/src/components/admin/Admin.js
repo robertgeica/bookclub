@@ -6,16 +6,10 @@ import AddCategory from "./AddCategory";
 import AddBook from "./AddBook";
 import { loadCategories } from "../../actions/category";
 
-
 const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
-  // TODO: clean code
-
-
   useEffect(() => {
     store.dispatch(loadCategories());
   }, []);
-
-  // console.log(categories);
 
   let options = [];
   let subcategoryOptions = [];
@@ -32,22 +26,16 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
         }
       });
 
-
-  if (user === null || user.role === "user") {
+  if (!loading && !isAuthenticated) {
+    return <Redirect to="/login" />;
+  } else if (!loading && user.role === "user") {
     return <Redirect to="/" />;
   } else {
     return (
       <div className="admin">
+        <AddCategory categories={categories} options={options} />
 
-        <AddCategory
-          categories={categories}
-          options={options}
-        />
-
-        <AddBook
-          options={options}
-          categories={categories}
-        />
+        <AddBook options={options} categories={categories} />
       </div>
     );
   }
