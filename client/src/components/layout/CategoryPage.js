@@ -52,14 +52,17 @@ const CategoryPage = (props) => {
   let booksToDisplay = booksArr;
   isFiltered ? booksToDisplay = fil : booksToDisplay = booksArr;
 
+ 
   return (
     <div className="category-container">
       {category !== undefined && category !== null ? (
+
         <div className="category">
+  {console.log(category.categoryImage)}
           <div
             className="library-categories"
             style={{ 
-              backgroundImage: `url(${category.categoryImage})` 
+              backgroundImage: `url("/${category.categoryImage}")` 
             }}
           >
             <ul className="categories-list">

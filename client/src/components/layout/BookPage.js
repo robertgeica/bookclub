@@ -35,7 +35,7 @@ const BookPage = (props) => {
         <div className="book-page">
           <div className="top">
             <div className="img-container">
-              <img src={book.imageUrl} alt="cover" />
+              <img src={`/${book.imageUrl}`} alt="cover" />
             </div>
             <div className="book-container">
               <div className="book-info">

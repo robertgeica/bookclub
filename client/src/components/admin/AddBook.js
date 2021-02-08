@@ -107,6 +107,8 @@ const AddBook = ({ options, categories }) => {
     bookObj.category = categoryId;
     bookObj.subcategories = selectedSubcategories;
     // console.log(bookObj);
+
+
     store.dispatch(handleAddBook(bookObj));
     setBookObj({});
   };
@@ -117,6 +119,8 @@ const AddBook = ({ options, categories }) => {
 
   const onBookChange = (e) => {
     setSelectedBookCover(e.target.files[0]);
+    setBookObj({ ...bookObj, imageUrl: e.target.files[0].name });
+
   };
 
   const onBookUpload = async () => {
@@ -125,7 +129,11 @@ const AddBook = ({ options, categories }) => {
     formData.append("file", selectedBookCover, selectedBookCover.name);
 
     await axios.post("api/fileupload", formData);
+
+    
   };
+
+  console.log(bookObj);
 
 
   return (

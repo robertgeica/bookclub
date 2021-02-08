@@ -44,7 +44,7 @@ export const handleAddBook = (newBook) => async (dispatch) => {
       category: newBook.category,
       subcategories: newBook.subcategories,
       description: newBook.description,
-      imageUrl: newBook.image,
+      imageUrl: newBook.imageUrl,
       language: newBook.language,
       pages: newBook.pages,
       format: newBook.format,

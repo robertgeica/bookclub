@@ -41,6 +41,8 @@ router.post('/', auth, async (req, res) => {
 
 
     const book = await Book(req.body);
+
+    console.log(req.body);
     book.save();
     res.status(200).send('New book added successfully.');
   } catch (error) {

@@ -51,6 +51,8 @@ const AddCategory = ({ categories, options }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const onFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
+
+    onChangeCategoryImage(e.target.files[0].name);
   };
 
   const onFileUpload = async () => {
@@ -87,7 +89,7 @@ const AddCategory = ({ categories, options }) => {
               placeholder={selectedFile == null ? "" : selectedFile.name}
               defaultValue={selectedFile == null ? "" : selectedFile.name}
               id="middle-form-field"
-              onChange={(e) => onChangeCategoryImage(e.target.value)}
+              //onChange={(e) => onChangeCategoryImage(e.target.value)}
             />
             <span className="btn" onClick={onFileUpload}>
               Upload
