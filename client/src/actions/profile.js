@@ -61,14 +61,24 @@ export const handleAddToWishlist = (bookId, userId) => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profile/' + userId);
 
-		console.log(res.data);
-		const profileObj = {
-			...res.data[0],
-			wishlist: [ ...res.data[0].wishlist, bookId ]
-		};
+		let alreadyWishlisted = false;
+    res.data[0].wishlist.map(bk => {
+      if(bk === bookId) {
+        alreadyWishlisted = true;
+      }
+    })
+		
+    if(alreadyWishlisted) {
+      console.log('alert: already wishlisted');
+    } else {
+      const profileObj = {
+        ...res.data[0],
+        wishlist: [ ...res.data[0].wishlist, bookId ]
+      };
 
-		await axios.put('/api/profile/' + userId, profileObj);
-		console.log(profileObj);
+      await axios.put('/api/profile/' + userId, profileObj);
+      console.log(profileObj);
+    }
 
 		dispatch({
 			type: UPDATE_PROFILE,
@@ -85,14 +95,24 @@ export const handleAddToReadedList = (bookId, userId) => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profile/' + userId);
 
-		console.log(res.data);
-		const profileObj = {
+		let bookExists = false;
+    res.data[0].wishlist.map(bk => {
+      if(bk === bookId) {
+        bookExists = true;
+      }
+    })
+		
+    if(bookExists) {
+      console.log('alert: book exists on completed books list');
+    } else {
+      const profileObj = {
 			...res.data[0],
 			readedBooks: [ ...res.data[0].readedBooks, bookId ]
 		};
 
-		await axios.put('/api/profile/' + userId, profileObj);
-		console.log(profileObj);
+      await axios.put('/api/profile/' + userId, profileObj);
+      console.log(profileObj);
+    }
 
 		dispatch({
 			type: UPDATE_PROFILE,
