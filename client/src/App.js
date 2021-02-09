@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
+import { loadProfiles } from './actions/profile';
 
 // components
 import Navbar from './components/layout/Navbar';
@@ -18,6 +19,7 @@ import Admin from './components/admin/Admin';
 import Library from './components/layout/Library';
 import CategoryPage from './components/layout/CategoryPage';
 import BookPage from './components/layout/BookPage';
+import ProfilePage from './components/layout/ProfilePage';
 
 import './app.scss';
 
@@ -28,6 +30,7 @@ const App = () => {
 
   useEffect(() => {
     store.dispatch(loadUser());
+    store.dispatch(loadProfiles());
   }, []);
 
   return (
@@ -45,6 +48,7 @@ const App = () => {
           <Route exact path="/library" component={Library} />
           <Route exact path="/library/category/:id" component={CategoryPage} />
           <Route exact path="/library/book/:id" component={BookPage} />
+          <Route exact path="/profile" component={ProfilePage} />
         </Switch>
       </Router>
     </Provider>

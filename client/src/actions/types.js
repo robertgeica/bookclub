@@ -30,3 +30,10 @@ export const ADD_BOOK = 'ADD_BOOK';
 export const UPDATE_BOOK = 'UPDATE_BOOK';
 export const DELETE_BOOK = 'DELETE_BOOK';
 
+// profile
+export const PROFILE_LOAD = 'PROFILE_LOAD'; 
+export const PROFILES_LOAD = 'PROFILES_LOAD';
+export const ADD_PROFILE = 'ADD_PROFILE';
+export const DELETE_PROFILE = 'DELETE_PROFILE';
+export const PROFILE_LOAD_ERROR = 'PROFILE_LOAD_ERROR';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';

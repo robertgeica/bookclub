@@ -33,7 +33,7 @@ export const loadUser = () => async (dispatch) => {
 	}
 };
 // Register user
-export const register = ({ username, email, role, password }) => async (dispatch) => {
+export const register = ({ email, role, password }) => async (dispatch) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ export const register = ({ username, email, role, password }) => async (dispatch
 	const users = await axios.get('/api/auth/users');
 	users.data.length > 0 ? role = 'user' : role = 'admin';
 
-	const body = JSON.stringify({ username, email, role, password });
+	const body = JSON.stringify({ email, role, password });
 
 	try {
 		const res = await axios.post('/api/register', body, config);

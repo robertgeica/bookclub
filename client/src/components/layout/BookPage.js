@@ -5,6 +5,8 @@ import ReactStars from "react-rating-stars-component";
 import { connect } from "react-redux";
 import store from "../../store/store";
 import { loadBook, handleUpdateRating } from "../../actions/book";
+import { handleAddToWishlist, handleAddToReadedList } from '../../actions/profile';
+
 
 const BookPage = (props) => {
   const book = props.book;
@@ -78,8 +80,8 @@ const BookPage = (props) => {
               </div>
 
               <div className="buttons">
-                <button id="btn1">Am citit</button>
-                <button id="btn2">Wishlist</button>
+                <button id="btn1" onClick={() => store.dispatch(handleAddToReadedList(book._id, props.auth.user._id))}>Am citit</button>
+                <button id="btn2" onClick={() => store.dispatch(handleAddToWishlist(book._id, props.auth.user._id))}>Wishlist</button>
                 <button onClick={onChangeReading} id="btn3">
                   Citeste
                 </button>
@@ -106,6 +108,7 @@ const BookPage = (props) => {
   }
 };
 const mapStateToProps = (state) => ({
+	auth: state.auth,
   book: state.book.currentBook,
 });
 

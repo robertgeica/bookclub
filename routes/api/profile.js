@@ -21,7 +21,9 @@ router.get('/', async (req, res) => {
 // @description     Test route
 router.get('/:id', async (req, res) => {
 	try {
-		const profile = await Profile.find();
+
+    let id = await req.params.id;
+		const profile = await Profile.find({userId: id});
 
 		res.json(profile);
 	} catch (error) {
@@ -45,29 +47,28 @@ router.post('/', auth, async (req, res) => {
 	}
 });
 
-// @route           POST /profile/:id
+// @route           PUT /profile/:id
 // @description     Update profile task
-router.post('/:id', auth, async (req, res) => {
-	console.log(req.body);
+router.put('/:id', auth, async (req, res) => {
 	try {
-		let profile = await Profile.findById(req.params.id);
+		let id = req.params.id;
+		let profile = await Profile.find({userId: id});
 
-		if (profile.userId !== req.user.id) {
-			console.log('not allowed to update this profile');
-		}
-
+		console.log(profile);
+	
 		if (!profile) res.status(404).send('No profile to update.');
 
-		profile.username = req.body.username;
-		profile.profileImage = req.body.profileImage;
-		profile.wishlist = req.body.wishlist;
-		profile.readingList = req.body.readingList;
-		profile.readedBooks = req.body.readedBooks;
-		profile.points = req.body.points;
+		profile[0].username = req.body.username;
+		profile[0].profileImage = req.body.profileImage;
+		profile[0].wishlist = req.body.wishlist;
+		profile[0].readingList = req.body.readingList;
+		profile[0].readedBooks = req.body.readedBooks;
+		profile[0].points = req.body.points;
 
-		await profile.save();
+		await profile[0].save();
 		res.json('profile updated successfully.');
 	} catch (error) {
+		console.log(error);
 		res.status(400).send('Error editing the week.');
 	}
 });

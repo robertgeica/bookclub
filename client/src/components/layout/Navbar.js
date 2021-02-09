@@ -8,11 +8,12 @@ import { logout } from '../../actions/auth';
 
 import logo from '../../assets/logo.png';
 
-const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout, profile }) => {
 	const [ open, setOpen ] = useState(false);
 
 	if (window.initialWidth < 700) setOpen(true);
 	
+
 	return (
 		<nav>
 			<div className="left-nav">
@@ -31,6 +32,10 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 							<Fragment>
 								<Link onClick={() => setOpen(!open)} to="/admin">
 									Admin
+								</Link>
+
+								<Link onClick={() => setOpen(!open)} to='/profile'>
+									Profile
 								</Link>
 							</Fragment>
 						) : (
@@ -80,7 +85,8 @@ Navbar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-	auth: state.auth
+	auth: state.auth,
+	profile: state.profile
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
