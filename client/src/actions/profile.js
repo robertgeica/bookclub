@@ -65,11 +65,19 @@ export const handleAddToWishlist = (bookId, userId) => async (dispatch) => {
     res.data[0].wishlist.map(bk => {
       if(bk === bookId) {
         alreadyWishlisted = true;
-      }
-    })
+      } 
+    });
 		
     if(alreadyWishlisted) {
-      console.log('alert: already wishlisted');
+			let newWishlist = res.data[0].wishlist.filter(bkId => bkId != bookId);
+
+			const profileObj = {
+				...res.data[0],
+				wishlist: newWishlist
+			}
+			await axios.put('/api/profile/' + userId, profileObj);
+      console.log(profileObj);
+      console.log('alert: already wishlisted. deleted');
     } else {
       const profileObj = {
         ...res.data[0],
@@ -78,12 +86,14 @@ export const handleAddToWishlist = (bookId, userId) => async (dispatch) => {
 
       await axios.put('/api/profile/' + userId, profileObj);
       console.log(profileObj);
-    }
+			console.log('adding to wishlist')
+		}
 
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: res.data
 		});
+		dispatch(loadProfile(userId));
 	} catch (error) {
 		dispatch({
 			type: PROFILE_LOAD_ERROR
@@ -91,33 +101,46 @@ export const handleAddToWishlist = (bookId, userId) => async (dispatch) => {
 	}
 };
 
-export const handleAddToReadedList = (bookId, userId) => async (dispatch) => {
+export const handleAddToReadList = (bookId, userId) => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profile/' + userId);
 
+  
 		let bookExists = false;
-    res.data[0].wishlist.map(bk => {
+
+    res.data[0].readedBooks.map(bk => {
       if(bk === bookId) {
         bookExists = true;
-      }
-    })
+      } 
+    });
 		
     if(bookExists) {
-      console.log('alert: book exists on completed books list');
+			let newReadBooks = res.data[0].readedBooks.filter(bkId => bkId != bookId);
+
+			const profileObj = {
+				...res.data[0],
+				readedBooks: newReadBooks
+			}
+			await axios.put('/api/profile/' + userId, profileObj);
+      console.log(profileObj);
+      console.log('alert: already on completed list. deleted');
     } else {
       const profileObj = {
-			...res.data[0],
-			readedBooks: [ ...res.data[0].readedBooks, bookId ]
-		};
+        ...res.data[0],
+        readedBooks: [ ...res.data[0].readedBooks, bookId ]
+      };
 
       await axios.put('/api/profile/' + userId, profileObj);
       console.log(profileObj);
-    }
+			console.log('adding to completed list')
+		}
 
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: res.data
 		});
+		dispatch(loadProfile(userId));
+
 	} catch (error) {
 		dispatch({
 			type: PROFILE_LOAD_ERROR

@@ -66,13 +66,23 @@ export const handleAddBook = (newBook) => async (dispatch) => {
   }
 };
 
-export const handleUpdateRating = (id, newRating) => async (dispatch) => {
+export const handleUpdateRating = (id, userId, newRating) => async (dispatch) => {
+  console.log('userid', userId);
   try {
     const res = await axios.get("/api/books/" + id);
 
+    let newRatingsArr = res.data.rating.filter(r => r.userId !== userId);
+
+    const ratingObj = {
+      userId: userId,
+      rating: newRating
+    };
+
+    newRatingsArr.push(ratingObj);
+
     const bookObj = {
       ...res.data,
-      rating: newRating,
+      rating: newRatingsArr
     };
     console.log(bookObj);
 

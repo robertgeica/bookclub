@@ -26,6 +26,22 @@ nav {
 		justify-content: row;
 	}
 
+	.search-bar {
+
+		@media (max-width: $bp-tablet) {
+			display: none;
+		}
+		margin: auto 0 auto 3em;
+		width: 15em;
+
+		.wrapper {
+			height: 2.8em;
+
+			&:hover {
+			}
+		}
+	}
+
 	.menu {
 		cursor: pointer;
 		align-self: center;

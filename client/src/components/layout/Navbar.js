@@ -1,18 +1,42 @@
-import React, { useState, Fragment } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import HamburgerMenu from 'react-hamburger-menu';
 // Redux
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import { ReactSearchAutocomplete } from 'react-search-autocomplete';
+
+import store from '../../store/store';
+import { loadData, loadBook } from '../../actions/book';
 
 import logo from '../../assets/logo.png';
 
-const Navbar = ({ auth: { isAuthenticated, loading, user }, logout, profile }) => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout, profile, data }) => {
 	const [ open, setOpen ] = useState(false);
-
+	let history = useHistory();
 	if (window.initialWidth < 700) setOpen(true);
+
+	useEffect( () => {
+		store.dispatch(loadData());
+
+	}, []);
 	
+
+
+	const handleOnSearch = (string, cached) => {
+		console.log(string, cached);
+	}
+	
+	const handleOnSelect = item => {
+		store.dispatch(loadBook(item._id));
+		history.push(`/library/book/${item._id}`);
+	};
+
+	const handleOnFocus = () => {
+		console.log('focused')
+	}
+
 
 	return (
 		<nav>
@@ -20,6 +44,27 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout, profile }) =
 				<Link className="logo" to="/">
 					<img src={logo} alt="logo" />
 				</Link>
+			</div>
+
+			<div className="search-bar">
+				<ReactSearchAutocomplete
+					items={data !== null ? data : ''}
+					onSearch={handleOnSearch}
+					onSelect={handleOnSelect}
+					onFocus={handleOnFocus}
+					fuseOptions={{ keys: ["title", "author"] }}
+					resultStringKeyName="title"
+					autoFocus
+
+					styling={{
+						border: "1px solid #337ab7",
+						backgroundColor: "white",
+						color: "#666",
+						iconColor: "#337ab7",
+						lineColor: "#337ab7",
+						placeholderColor: "#337ab7"
+					}}
+				/>
 			</div>
 
 			<ul className={`nav-links ${open ? 'open' : null} `}>
@@ -86,6 +131,7 @@ Navbar.propTypes = {
 
 const mapStateToProps = (state) => ({
 	auth: state.auth,
+	data: state.book.data,
 	profile: state.profile
 });
 

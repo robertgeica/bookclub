@@ -5,8 +5,12 @@ import ReactStars from "react-rating-stars-component";
 import { connect } from "react-redux";
 import store from "../../store/store";
 import { loadBook, handleUpdateRating } from "../../actions/book";
-import { handleAddToWishlist, handleAddToReadedList } from '../../actions/profile';
+import {
+  handleAddToWishlist,
+  handleAddToReadList,
+} from "../../actions/profile";
 
+import ReadBook from "./ReadBook";
 
 const BookPage = (props) => {
   const book = props.book;
@@ -18,7 +22,7 @@ const BookPage = (props) => {
 
   const onRatingChange = (newRating) => {
     // console.log(newRating);
-    store.dispatch(handleUpdateRating(bookId, newRating));
+    store.dispatch(handleUpdateRating(bookId, props.auth.user._id, newRating));
   };
 
   const [isReading, setIsReading] = useState(false);
@@ -26,18 +30,39 @@ const BookPage = (props) => {
     setIsReading(!isReading);
   };
 
-  console.log(book);
-  
+  let profile = props.profile.profile;
+  let isWishlisted = false;
+  let isCompletedBook = false;
 
+  if (profile != null) {
+    profile[0].wishlist.map((bkId) => {
+      bkId == bookId ? (isWishlisted = true) : (isWishlisted = false);
+    });
+
+    profile[0].readedBooks.map((bkId) => {
+      bkId == bookId ? (isCompletedBook = true) : (isCompletedBook = false);
+    });
+  }
+
+  console.log(profile, book);
+
+ 
+  let rating = 0;
   if (book == null) {
     return 0;
   } else {
+    book.rating.map(r => {
+      rating += parseInt(r.rating);
+    });
+    rating /= book.rating.length;
+    
+
     return (
       <Fragment>
         <div className="book-page">
           <div className="top">
             <div className="img-container">
-              <img src={`/${book.imageUrl}`} alt="cover" />
+              <img src={book.imageUrl} alt="cover" />
             </div>
             <div className="book-container">
               <div className="book-info">
@@ -45,7 +70,8 @@ const BookPage = (props) => {
                 by <a href="#">{book.author}</a>
                 <ReactStars
                   count={10}
-                  value={book.rating}
+                  // value={book.rating}
+                  value={rating}
                   onChange={onRatingChange}
                   size={24}
                   className="rating"
@@ -80,8 +106,27 @@ const BookPage = (props) => {
               </div>
 
               <div className="buttons">
-                <button id="btn1" onClick={() => store.dispatch(handleAddToReadedList(book._id, props.auth.user._id))}>Am citit</button>
-                <button id="btn2" onClick={() => store.dispatch(handleAddToWishlist(book._id, props.auth.user._id))}>Wishlist</button>
+                <button
+                  id="btn1"
+                  onClick={() =>
+                    store.dispatch(
+                      handleAddToReadList(book._id, props.auth.user._id)
+                    )
+                  }
+                >
+                  {isCompletedBook ? "Am citit" : "Carte citita"}
+
+                </button>
+                <button
+                  id="btn2"
+                  onClick={() =>
+                    store.dispatch(
+                      handleAddToWishlist(book._id, props.auth.user._id)
+                    )
+                  }
+                >
+                  {isWishlisted ? "Wishlisted" : "Wishlist"}
+                </button>
                 <button onClick={onChangeReading} id="btn3">
                   Citeste
                 </button>
@@ -103,13 +148,15 @@ const BookPage = (props) => {
             </div>
           </div>
         </div>
+        {isReading ? <ReadBook book={book.fileName} /> : <Fragment></Fragment>}
       </Fragment>
     );
   }
 };
 const mapStateToProps = (state) => ({
-	auth: state.auth,
+  auth: state.auth,
   book: state.book.currentBook,
+  profile: state.profile,
 });
 
 export default connect(mapStateToProps)(BookPage);

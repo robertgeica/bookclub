@@ -13,6 +13,8 @@ import {
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
+import { loadProfile } from './profile';
+
 // Load user
 export const loadUser = () => async (dispatch) => {
 	if (localStorage.token) {
@@ -26,6 +28,7 @@ export const loadUser = () => async (dispatch) => {
 			type: USER_LOADED,
 			payload: res.data
 		});
+		dispatch(loadProfile(res.data._id));
 	} catch (error) {
 		dispatch({
 			type: AUTH_ERROR
