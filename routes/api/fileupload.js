@@ -10,7 +10,6 @@ router.post('/', (req, res) => {
 	}
 
 	const myFile = req.files.file;
-
   myFile.mv(`${process.cwd()}/public/${myFile.name}`, function(err) {
 			if (err) {
 				console.log(err);

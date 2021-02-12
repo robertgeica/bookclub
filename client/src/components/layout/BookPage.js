@@ -56,13 +56,12 @@ const BookPage = (props) => {
     });
     rating /= book.rating.length;
     
-
     return (
       <Fragment>
         <div className="book-page">
           <div className="top">
             <div className="img-container">
-              <img src={book.imageUrl} alt="cover" />
+              <img src={`/${book.imageUrl}`} alt="cover" />
             </div>
             <div className="book-container">
               <div className="book-info">
@@ -114,7 +113,7 @@ const BookPage = (props) => {
                     )
                   }
                 >
-                  {isCompletedBook ? "Am citit" : "Carte citita"}
+                  {isCompletedBook ? "Completed" : "Not completed"}
 
                 </button>
                 <button
@@ -141,7 +140,7 @@ const BookPage = (props) => {
 
             <div className="subcategories">
               {book.subcategories.map((sc) => (
-                <Link className="titlu" to={`/library/book/${sc}`}>
+                <Link className="titlu" >
                   {sc}
                 </Link>
               ))}

@@ -129,10 +129,22 @@ const AddBook = ({ options, categories }) => {
     formData.append("file", selectedBookCover, selectedBookCover.name);
 
     await axios.post("api/fileupload", formData);
-
-    
   };
 
+  // file upload
+  const [selectedFilename, setSelectedFilename] = useState(null);
+  const onBookFilenameChange = e => {
+    setSelectedFilename(e.target.files[0]);
+    setBookObj({ ...bookObj, fileName: e.target.files[0].name});
+  }
+
+  const onFileUpload = async () => {
+    const formData = new FormData();
+    console.log(selectedFilename);
+    formData.append("file", selectedFilename, selectedFilename.name);
+
+    await axios.post("api/fileupload", formData);
+  }
   console.log(bookObj);
 
 
@@ -172,16 +184,7 @@ const AddBook = ({ options, categories }) => {
             onChange={(e) => handleChangeBook(e)}
           />
         </div>
-        <div className="inp">
-          <span className="label">Rating</span>
-          <input
-            className="form-field-book"
-            placeholder="rating"
-            name="rating"
-            defaultValue={bookObj.rating}
-            onChange={(e) => handleChangeBook(e)}
-          />
-        </div>
+
         <div className="inp">
           <span className="label">Categorie</span>
 
@@ -279,16 +282,31 @@ const AddBook = ({ options, categories }) => {
             onChange={(e) => handleChangeBook(e)}
           />
         </div>
+
+
         <div className="inp">
-          <span className="label">Filename</span>
+          <label htmlFor="fileEbook" className="btn select">
+            Select file
+          </label>
           <input
-            className="form-field-book"
-            placeholder="file name"
+            id="fileEbook"
+            onChange={e => onBookFilenameChange(e)}
+            className=" hide"
+            type="file"
+          />
+          <input
+            className="form-field-book upload"
             name="fileName"
-            defaultValue={bookObj.fileName}
+            placeholder={selectedFilename == null ? "" : selectedFilename.name}
+            defaultValue={selectedFilename == null ? "" : selectedFilename.name}
             onChange={(e) => handleChangeBook(e)}
           />
+          <span className="btn" onClick={onFileUpload}>
+            Upload
+          </span>
         </div>
+
+
         <div className="inp">
           <span className="label">ISBN</span>
           <input
