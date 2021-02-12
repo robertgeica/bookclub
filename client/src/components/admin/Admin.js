@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import store from "../../store/store";
@@ -26,6 +26,9 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
         }
       });
 
+      const [renderAddCategory, setRenderAddCategory] = useState(false);
+      const [renderAddBook, setRenderAddBook] = useState(false);
+
   if (!loading && !isAuthenticated) {
     return <Redirect to="/login" />;
   } else if (!loading && user.role === "user") {
@@ -33,9 +36,36 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
   } else {
     return (
       <div className="admin">
-        <AddCategory categories={categories} options={options} />
+        <div className="action-buttons">
+          <div onClick={() => setRenderAddCategory(!renderAddCategory)} class="box-1">
+            <div class="btn btn-one">
+              <span>Add category</span>
+            </div>
+          </div>
+          <div onClick={() => setRenderAddBook(!renderAddBook)} class="box-2">
+            <div class="btn btn-one">
+              <span>Add book</span>
+            </div>
+          </div>
+          <div class="box-3">
+            <div class="btn btn-one">
+              <span>Edit category</span>
+            </div>
+          </div>
+          <div class="box-4">
+            <div class="btn btn-one">
+              <span>Edit book</span>
+            </div>
+          </div>
+        </div>
 
-        <AddBook options={options} categories={categories} />
+        {renderAddCategory ? <AddCategory categories={categories} options={options} /> : ''}
+        {renderAddBook ? <AddBook options={options} categories={categories} /> : ''}
+
+
+        
+
+        
       </div>
     );
   }

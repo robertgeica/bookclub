@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useRef, useEffect, Fragment } from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
@@ -45,6 +45,19 @@ const BookPage = (props) => {
   }
 
   console.log(profile, book);
+
+  const [copySuccess, setCopySuccess] = useState('');
+
+// your function to copy here
+
+  const copyToClipBoard = async copyMe => {
+    try {
+      await navigator.clipboard.writeText(copyMe);
+      setCopySuccess('Copied!');
+    } catch (err) {
+      setCopySuccess('Failed to copy!');
+    }
+  };
 
  
   let rating = 0;
@@ -100,8 +113,8 @@ const BookPage = (props) => {
               </div>
 
               <div className="book-id">
-                <p id={book.isbn}>ISBN</p>
-                <p id={book._id}>ID</p>
+                <p onClick={() => copyToClipBoard(book.isbn)} id={book.isbn}>ISBN</p>
+                <p onClick={() => copyToClipBoard(book._id)} id={book._id}>ID</p>
               </div>
 
               <div className="buttons">
