@@ -15,7 +15,6 @@ const ProfilePage = ({ auth: { isAuthenticated, loading, user }, data }) => {
     }
   }, []);
 
-  console.log(data);
  
   return (
     <div className="profile">

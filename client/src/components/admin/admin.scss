@@ -7,7 +7,15 @@
 
   .action-buttons {
     display: flex;
-    justify-content: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+    
+    flex-direction: column;
+    @media (min-width: $bp-tablet) {
+      flex-direction: row;
+
+    }
 
     .box-1, .box-2, .box-3, .box-4 {
       margin: .5em;
@@ -30,7 +38,7 @@
       line-height: 50px;
       height: 3em;
       text-align: center;
-      width: 15em;
+      width: 14em;
       cursor: pointer;
       color: #fff;
       transition: all 0.3s;
