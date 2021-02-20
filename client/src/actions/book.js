@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK } from './types';
+import { DATA_LOAD, BOOK_LOAD, BOOK_LOAD_ERROR, ADD_BOOK, UPDATE_BOOK, DELETE_BOOK } from './types';
 
 
 export const loadData = () => async (dispatch) => {
@@ -98,3 +98,36 @@ export const handleUpdateRating = (id, userId, newRating) => async (dispatch) =>
     });
   }
 };
+
+
+export const handleDeleteBook = (id) => async (dispatch) => {
+  try {
+    const res = await axios.delete("/api/books/" + id);
+    dispatch({
+      type: DELETE_BOOK,
+      payload: res.data,
+    });
+    dispatch(loadData());
+  } catch (error) {
+    dispatch({
+      type: BOOK_LOAD_ERROR,
+    });
+  }
+};
+
+export const handleEditBook = (id, bookObj) => async dispatch => {
+  try {
+    const res = await axios.put("/api/books/" + id, bookObj);
+    dispatch({
+      type: DELETE_BOOK,
+      payload: res.data,
+    });
+    dispatch(loadData());
+    
+  } catch (error) {
+    dispatch({
+      type: BOOK_LOAD_ERROR,
+    });
+    
+  }
+}

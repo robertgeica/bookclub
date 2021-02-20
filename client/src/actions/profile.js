@@ -34,6 +34,35 @@ export const loadProfile = (id) => async (dispatch) => {
 	}
 };
 
+export const handleAddProfile = (id) =>  async dispatch => {
+	try {
+		
+		const profileObj = {
+			username: '',
+			profileImage: '',
+			wishlist: [],
+			readingList: [],
+			readedBooks: [],
+			points: 0,
+			userId: id
+			// username, profileImage, wishlist, readingList, readedBooks, points
+		};
+		console.log(profileObj);
+		
+		await axios.post('/api/profile/', profileObj);
+
+		dispatch({
+			type: ADD_PROFILE,
+			payload: [profileObj]
+		});
+		
+	} catch (error) {
+		dispatch({
+			type: PROFILE_LOAD_ERROR
+		});
+		
+	}
+}
 export const handleUpdateProfile = (id, newProfile) => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profile/' + id);

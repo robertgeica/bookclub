@@ -12,10 +12,11 @@ export default function(state = initialState, action) {
   switch (type) {
     case DATA_LOAD:
     case ADD_BOOK:
-    case DELETE_BOOK:
       return { data: payload };
+
+    case DELETE_BOOK:
     case UPDATE_BOOK:
-      return { currentBook: payload};
+      return {...state, payload};
 
     case BOOK_LOAD:
       return { ...state, currentBook: payload };

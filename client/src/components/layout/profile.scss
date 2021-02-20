@@ -1,0 +1,94 @@
+.profile {
+
+  display: flex;
+  flex-direction: column;
+  margin: 4em auto 2em;
+  max-width: 70%;
+
+  @media (max-width: $bp-laptop) {
+    max-width: 65%;
+  }
+
+  @media (max-width: $bp-tablet) {
+    max-width: 90%;
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.1em;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto 2em;
+
+    img {
+      height: 200px;
+      width: 200px;
+      border-radius: 50%;
+    }
+    h2 {
+      font-weight: 500;
+      margin: 0;
+      font-size: 1.2em;
+    }
+
+    h3 {
+      margin: .2em;
+      font-weight: 500;
+    }
+  }
+.books-row {
+  display: flex;
+  justify-content: row;
+  max-width: 100vw;
+  
+
+  
+
+  // indiana drag scroll
+  .scroll-container {
+    display: flex;
+  }
+
+  .book {
+    margin: 0 1em 0 1em;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1em;
+    img {
+      width: 130px;
+      height: 195px;
+      border-radius: 5px;
+      -webkit-box-shadow: -1px 9px 12px 0px rgba(50, 50, 50, 0.22);
+      -moz-box-shadow: -1px 9px 12px 0px rgba(50, 50, 50, 0.22);
+      box-shadow: -1px 9px 12px 0px rgba(50, 50, 50, 0.22);
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .titlu {
+      margin: 7px 2px 0;
+      padding: 0;
+      font-size: 16px;
+      font-weight: 500;
+      color: #666;
+      max-width: 130px;
+      text-decoration: none;
+    }
+
+    p#autor {
+      margin: 5px 2px;
+      padding: 0;
+      font-size: 14px;
+      color: #a1a1a1;
+      max-width: 130px;
+    }
+  }
+}
+
+}

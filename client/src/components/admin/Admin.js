@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import store from "../../store/store";
 import AddCategory from "./AddCategory";
 import AddBook from "./AddBook";
+import EditCategory from './EditCategory';
 import { loadCategories } from "../../actions/category";
+import EditBook from "./EditBook";
 
 const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
   useEffect(() => {
@@ -27,7 +29,9 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
       });
 
       const [renderAddCategory, setRenderAddCategory] = useState(false);
-      const [renderAddBook, setRenderAddBook] = useState(false);
+      const [renderAddBook, setRenderAddBook] = useState(false);      
+      const [renderEditCategory, setRenderEditCategory] = useState(false);
+      const [renderEditBook, setRenderEditBook] = useState(false);
 
   if (!loading && !isAuthenticated) {
     return <Redirect to="/login" />;
@@ -47,12 +51,12 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
               <span>Add book</span>
             </div>
           </div>
-          <div class="box-3">
+          <div onClick={() => setRenderEditCategory(!renderEditCategory)} class="box-3">
             <div class="btn btn-one">
               <span>Edit category</span>
             </div>
           </div>
-          <div class="box-4">
+          <div onClick={() => setRenderEditBook(!renderEditBook)} class="box-4">
             <div class="btn btn-one">
               <span>Edit book</span>
             </div>
@@ -61,7 +65,8 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
 
         {renderAddCategory ? <AddCategory categories={categories} options={options} /> : ''}
         {renderAddBook ? <AddBook options={options} categories={categories} /> : ''}
-
+        {renderEditCategory ? <EditCategory categories={categories} /> : ''}
+        {renderEditBook ? <EditBook /> : ''}
 
         
 

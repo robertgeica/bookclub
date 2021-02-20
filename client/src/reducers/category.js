@@ -12,10 +12,13 @@ import { CATEGORIES_LOAD, CATEGORY_LOAD, CATEGORY_LOAD_ERROR, ADD_CATEGORY, UPDA
       case CATEGORIES_LOAD:
       case ADD_CATEGORY:
       case ADD_SUBCATEGORIES:
-      case DELETE_CATEGORY:
         return { categories: payload };
-  
-      case CATEGORY_LOAD:
+
+      case DELETE_CATEGORY:
+      case UPDATE_CATEGORY:
+        return {...state, payload}
+      
+        case CATEGORY_LOAD:
         return { ...state, category: payload };
       
       case CATEGORY_LOAD_ERROR:
