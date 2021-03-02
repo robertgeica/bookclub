@@ -7,8 +7,9 @@ import AddBook from "./AddBook";
 import EditCategory from './EditCategory';
 import { loadCategories } from "../../actions/category";
 import EditBook from "./EditBook";
+import EditProfile from './EditProfile';
 
-const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
+const Admin = ({ auth: { isAuthenticated, loading, user }, categories, profile }) => {
   useEffect(() => {
     store.dispatch(loadCategories());
   }, []);
@@ -32,6 +33,7 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
       const [renderAddBook, setRenderAddBook] = useState(false);      
       const [renderEditCategory, setRenderEditCategory] = useState(false);
       const [renderEditBook, setRenderEditBook] = useState(false);
+      const [renderEditProfile, setRenderEditProfile] = useState(false);
 
   if (!loading && !isAuthenticated) {
     return <Redirect to="/login" />;
@@ -61,12 +63,18 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
               <span>Edit book</span>
             </div>
           </div>
+          <div onClick={() => setRenderEditProfile(!renderEditProfile)} class="box-3">
+            <div class="btn btn-one">
+              <span>Edit profile</span>
+            </div>
+          </div>
         </div>
 
         {renderAddCategory ? <AddCategory categories={categories} options={options} /> : ''}
         {renderAddBook ? <AddBook options={options} categories={categories} /> : ''}
         {renderEditCategory ? <EditCategory categories={categories} /> : ''}
         {renderEditBook ? <EditBook /> : ''}
+        {renderEditProfile ? <EditProfile profile={profile} /> : ''}
 
         
 
@@ -79,6 +87,7 @@ const Admin = ({ auth: { isAuthenticated, loading, user }, categories }) => {
 const mapStateToProps = (state) => ({
   auth: state.auth,
   categories: state.category.categories,
+  profile: state.profile.profile
 });
 
 export default connect(mapStateToProps)(Admin);

@@ -63,22 +63,45 @@ export const handleAddProfile = (id) =>  async dispatch => {
 		
 	}
 }
-export const handleUpdateProfile = (id, newProfile) => async (dispatch) => {
+export const handleUpdateProfile = (id, profileImage, username) => async (dispatch) => {
 	try {
+		if(username == null & profileImage == null) {
+			console.log('nothing modified');
+			return null;
+		}
+
+		const profiles = await axios.get('/api/profile');
 		const res = await axios.get('/api/profile/' + id);
+		let profileObj = {};
+		let usernameTaken = false;
+		profiles.data.map(profile => {
+			if(profile.username == username) {
+				usernameTaken = true;
+			}
+		});
 
-		console.log(res.data);
-		const profileObj = {
-			// username, profileImage, wishlist, readingList, readedBooks, points
+		if(usernameTaken) {
+			console.log('pick another username');
+			return null;
+		}
+
+		profileObj = {
+			...res.data[0],
+			username: username == null ? res.data[0].username : username,
+			profileImage: profileImage == null ? res.data[0].profileImage : profileImage
 		};
-		console.log(profileObj);
 
+
+		 
+
+		console.log(profileObj);
 		await axios.put('/api/profile/' + id, profileObj);
 
 		dispatch({
 			type: UPDATE_PROFILE,
 			payload: res.data
 		});
+		dispatch(loadProfile(id));
 	} catch (error) {
 		dispatch({
 			type: PROFILE_LOAD_ERROR
